@@ -98,10 +98,8 @@ function showWeather(response) {
   let currTemp = document.getElementById("current-temp");
   currTemp.innerHTML = `${Math.round(response.data.main.temp)}°`;
 
-  let todayHigh = document.getElementById("today-high");
-  let todayLow = document.getElementById("today-low");
-  todayHigh.innerHTML = `${Math.round(response.data.main.temp_max)}°`;
-  todayLow.innerHTML = `${Math.round(response.data.main.temp_min)}°`;
+  let feelsLike = document.getElementById("feels-like-temp");
+  feelsLike.innerHTML = `${Math.round(response.data.main.feels_like)}°`;
 
   let currCond = document.getElementById("current-cond");
   currCond.innerHTML = `${response.data.weather[0].main}`;
@@ -112,11 +110,12 @@ function showWeather(response) {
   let currWindDir = document.getElementById("current-wind-dir");
   currWindDir.innerHTML = `${windDirCompass(response.data.wind.deg)}`;
 
-  let currWindSpeed = document.getElementById("currentwind-speed");
+  let currWindSpeed = document.getElementById("current-wind-speed");
   currWindSpeed.innerHTML = `${Math.round(response.data.wind.speed)} mph`;
 
   showWeatherIcon(response);
 }
+
 function showWeatherIcon(response) {
   let currentConditionIcon = document.querySelector("#cond-icon");
   let weatherCode = response.data.weather[0].id;
@@ -142,6 +141,7 @@ function showWeatherIcon(response) {
   }
   let iconURL = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
   currentConditionIcon.innerHTML = `<img src = "${iconURL}" alt="Weather Icon">`;
+}
 
 getCityWeather("New York");
 let searchForm = document.querySelector("#city-search");

@@ -34,10 +34,11 @@ ul {
   margin: 0;
   padding: 0;
 }
-p.temperature {
+.temperature {
   display: inline-block;
   font-size: 4rem;
   font-weight: 400;
+  margin-bottom: 0;
 }
 .superscript {
   display: inline;
@@ -51,4 +52,8 @@ footer {
   margin: 0 auto;
   text-align: center;
   color: #ffffff;
+}
+#cond-icon {
+  position: relative;
+  top: -1em;
 }
