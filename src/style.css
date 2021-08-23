@@ -2,6 +2,19 @@
 
 body {
   font-family: "Raleway", sans-serif;
+  background: #5f72cf;
+  background: -webkit-linear-gradient(to top, #5f72cf 0%, #22036b 100%);
+  background: -moz-linear-gradient(to top, #5f72cf 0%, #22036b 100%);
+  background: linear-gradient(to top, #5f72cf 0%, #22036b 100%);
+}
+.container {
+  background-color: rgba(255, 255, 255, 0.5);
+  max-width: 85%;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  margin: 20px auto;
+  padding: 20px 20px;
+  opacity: 0.5;
 }
 ul {
   list-style: none;
@@ -10,11 +23,18 @@ ul {
 }
 p.temperature {
   display: inline-block;
-  font-size: 2rem;
+  font-size: 4rem;
   font-weight: 400;
 }
 .superscript {
-  display: inline-block;
+  display: inline;
   font-size: 1rem;
-  padding: 0 10px 20px 0;
+  padding: 0;
+  position: relative;
+  top: -1em;
+}
+footer {
+  max-width: 75%;
+  margin: 0 auto;
+  color: #ffffff;
 }
