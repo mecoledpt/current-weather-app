@@ -17,35 +17,17 @@ body {
     #17024a 76%
   );
   background: linear-gradient(to top, #49579e 0%, #15076b 42%, #17024a 76%);
+  font-weight: 200;
 }
 h1 {
   margin: 20px auto 10px auto;
-}
-.container {
-  background: rgba(21, 7, 107, 0.25);
-  max-width: 85%;
-  border: 1px solid #ffffff;
-  border-radius: 8px;
-  margin: 20px auto;
-  padding: 20px 20px;
+  text-shadow: rgba(230, 230, 230, 0.4);
+  font-weight: 300;
 }
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-.temperature {
-  display: inline-block;
-  font-size: 4rem;
-  font-weight: 400;
-  margin-bottom: 0;
-}
-.superscript {
-  display: inline;
-  font-size: 1rem;
-  padding: 0;
-  position: relative;
-  top: -1em;
 }
 footer {
   max-width: 75%;
@@ -53,7 +35,55 @@ footer {
   text-align: center;
   color: #ffffff;
 }
-#cond-icon {
+a {
+  color: #a9cde0;
+  font-weight: 400;
+}
+.container {
+  background: rgba(53, 15, 124, 0.3);
+  max-width: 85%;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  margin: 20px auto;
+  padding: 20px 20px;
+}
+
+.temperature {
+  display: inline-block;
+  font-size: 4rem;
+  font-weight: 200;
+  margin-bottom: 0;
+}
+.superscript {
+  display: inline;
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 0 0 0 10px;
   position: relative;
   top: -1em;
+}
+
+#cond-icon {
+  position: relative;
+  top: -1.25em;
+}
+.button {
+  border-radius: 4px;
+  padding: 0 5px 0 5px;
+}
+.input-text {
+  border-radius: 4px;
+}
+.inactive {
+  color: #ffffff;
+  text-decoration: none;
+}
+.inactive:hover {
+  cursor: initial;
+}
+body.light {
+  background: #abeaf9;
+  background: -webkit-linear-gradient(top, #abeaf9, #49579e);
+  background: -moz-linear-gradient(top, #abeaf9, #49579e);
+  background: linear-gradient(to bottom, #abeaf9, #49579e);
 }

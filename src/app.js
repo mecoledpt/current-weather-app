@@ -1,3 +1,4 @@
+//Formats current date (month, day, year)
 function formatDate(currentDate) {
   let days = [
     "Sunday",
@@ -26,7 +27,7 @@ function formatDate(currentDate) {
     months[currentDate.getMonth()]
   } ${currentDate.getFullYear()}`;
 }
-
+//formats current time (hours, minutes)
 function formatTime(currentTime) {
   let currentMinutes = currentTime.getMinutes();
   if (currentMinutes < 10) {
@@ -47,17 +48,15 @@ console.log(formatDate(new Date()));
 let currentTime = document.querySelector("#curr-time");
 currentTime.innerHTML = formatTime(new Date());
 
+//search engine on submitting city name
 function submitHandler(event) {
   event.preventDefault();
-  let cityInput = document.querySelector("#city-search-input");
-  let cityName = document.querySelector("#city-name");
-  if (cityName.innerHTML === null) {
-    alert("Please enter a city");
-  } else {
-    cityName = cityInput.value.trim();
-    getCityWeather(cityName);
-  }
+  let cityInput = document.querySelector("#city-name-input");
+  let cityName = cityInput.value.trim();
+  getCityWeather(cityName);
 }
+
+//API call
 function getCityWeather(cityName) {
   let city = cityName.trim();
   let apiKey = "e7404fca7e5b62ae35774a01b0feeac1";
@@ -67,6 +66,7 @@ function getCityWeather(cityName) {
 
   axios.get(apiUrl).then(showWeather);
 }
+//converts wind degrees to compass direction
 function windDirCompass(degrees) {
   let val = Math.floor(degrees / 22.5 + 0.5);
   let dirArr = [
@@ -89,7 +89,7 @@ function windDirCompass(degrees) {
   ];
   return dirArr[val % 16];
 }
-
+//updates HTML elements to show weather response from API
 function showWeather(response) {
   console.log(response);
   let cityName = document.querySelector("#city-name");
@@ -114,8 +114,9 @@ function showWeather(response) {
   currWindSpeed.innerHTML = `${Math.round(response.data.wind.speed)} mph`;
 
   showWeatherIcon(response);
+  backgroundChange(response);
 }
-
+//determines what weather icon to link to based on API response
 function showWeatherIcon(response) {
   let currentConditionIcon = document.querySelector("#cond-icon");
   let weatherCode = response.data.weather[0].id;
@@ -142,7 +143,59 @@ function showWeatherIcon(response) {
   let iconURL = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
   currentConditionIcon.innerHTML = `<img src = "${iconURL}" alt="Weather Icon">`;
 }
-
+//Default API call of "New York"
 getCityWeather("New York");
 let searchForm = document.querySelector("#city-search");
 searchForm.addEventListener("submit", submitHandler);
+
+//Converts fahrenheit temperature to celcius, disables converting to C again
+function tempConvertCelcius(event) {
+  event.preventDefault();
+  let currTemp = document.getElementById("current-temp");
+  let currTempNum = parseInt(currTemp.textContent, 10);
+  let tempCelcius = Math.round((currTempNum - 32) * (5 / 9));
+  currTemp.innerHTML = `${tempCelcius}°`;
+
+  let fahrenheitLink = document.querySelector("a#fahrenheit-link");
+  fahrenheitLink.classList.remove("inactive");
+  fahrenheitLink.addEventListener("click", tempConvertFahrenheit);
+
+  let celciusLink = document.querySelector("a#celcius-link");
+  celciusLink.classList.add("inactive");
+  celciusLink.removeEventListener("click", tempConvertCelcius);
+}
+
+let celciusLink = document.querySelector("a#celcius-link");
+celciusLink.addEventListener("click", tempConvertCelcius);
+
+//converts celcius temperature back to fahrenheit, disables converting to F again
+function tempConvertFahrenheit(event) {
+  event.preventDefault();
+  let currTemp = document.getElementById("current-temp");
+  let currTempNum = parseInt(currTemp.textContent, 10);
+  let tempFahrenheit = Math.round((currTempNum * 9) / 5 + 32);
+  currTemp.innerHTML = `${tempFahrenheit}°`;
+
+  let fahrenheitLink = document.querySelector("#fahrenheit-link");
+  fahrenheitLink.classList.remove("inactive");
+  fahrenheitLink.removeEventListener("click", tempConvertFahrenheit);
+
+  let celciusLink = document.querySelector("#celcius-link");
+  celciusLink.classList.add("inactive");
+  celciusLink.addEventListener("click", tempConvertCelcius);
+}
+//displays light theme if after sunrise and before sunset, dark theme if after sunset and before sunrise
+function backgroundChange(response) {
+  let body = document.querySelector("body");
+
+  if (
+    response.data.dt >= response.data.sys.sunrise &&
+    response.data.dt < response.data.sys.sunset
+  ) {
+    body.classList.add("light");
+    body.classList.remove("dark");
+  } else {
+    body.classList.add("dark");
+    body.classList.remove("light");
+  }
+}
