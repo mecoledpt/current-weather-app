@@ -49,15 +49,21 @@ currentTime.innerHTML = formatTime(new Date());
 
 function submitHandler(event) {
   event.preventDefault();
-  let searchInput = document.getElementById("city-name-input");
-  city = searchInput.value.trim();
-  if (city) {
-    let cityName = document.getElementById("city-name");
-    cityName.innerHTML = `${searchInput.value}`;
+  let cityInput = document.querySelector("#city-search-input");
+  let cityName = document.querySelector("#city-name");
+  if (cityName.innerHTML === null) {
+    alert("Please enter a city");
+  } else {
+    cityName = cityInput.value.trim();
+    getCityWeather(cityName);
   }
-  return city;
 }
-let citySearch = document.getElementById("city-search");
-citySearch.addEventListener("submit", submitHandler);
+function getCityWeather(cityName) {
+  let city = cityName.replace(", ", ",").trim();
+  let apiKey = "e7404fca7e5b62ae35774a01b0feeac1";
+  let units = "imperial";
+  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?";
+  let apiUrl = `${apiEndpoint}q=${city}&units=${units}&appid=${apiKey}`;
 
-console.log(searchCity());
+  axios.get(apiUrl).then(showWeather);
+}
