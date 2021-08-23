@@ -46,3 +46,18 @@ console.log(formatDate(new Date()));
 
 let currentTime = document.querySelector("#curr-time");
 currentTime.innerHTML = formatTime(new Date());
+
+function submitHandler(event) {
+  event.preventDefault();
+  let searchInput = document.getElementById("city-name-input");
+  city = searchInput.value.trim();
+  if (city) {
+    let cityName = document.getElementById("city-name");
+    cityName.innerHTML = `${searchInput.value}`;
+  }
+  return city;
+}
+let citySearch = document.getElementById("city-search");
+citySearch.addEventListener("submit", submitHandler);
+
+console.log(searchCity());
