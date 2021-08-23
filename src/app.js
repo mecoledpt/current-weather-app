@@ -67,3 +67,82 @@ function getCityWeather(cityName) {
 
   axios.get(apiUrl).then(showWeather);
 }
+function windDirCompass(degrees) {
+  let val = Math.floor(degrees / 22.5 + 0.5);
+  let dirArr = [
+    "N",
+    "NNE",
+    "NE",
+    "ENE",
+    "E",
+    "ESE",
+    "SE",
+    "SSE",
+    "S",
+    "SSW",
+    "SW",
+    "WSW",
+    "W",
+    "WNW",
+    "NW",
+    "NNW",
+  ];
+  return dirArr[val % 16];
+}
+
+function showWeather(response) {
+  console.log(response);
+  let cityName = document.querySelector("#city-name");
+  cityName.innerHTML = `${response.data.name}`;
+
+  let currTemp = document.getElementById("current-temp");
+  currTemp.innerHTML = `${Math.round(response.data.main.temp)}°`;
+
+  let todayHigh = document.getElementById("today-high");
+  let todayLow = document.getElementById("today-low");
+  todayHigh.innerHTML = `${Math.round(response.data.main.temp_max)}°`;
+  todayLow.innerHTML = `${Math.round(response.data.main.temp_min)}°`;
+
+  let currCond = document.getElementById("current-cond");
+  currCond.innerHTML = `${response.data.weather[0].main}`;
+
+  let currHumidity = document.getElementById("current-humidity");
+  currHumidity.innerHTML = `${response.data.main.humidity}%`;
+
+  let currWindDir = document.getElementById("current-wind-dir");
+  currWindDir.innerHTML = `${windDirCompass(response.data.wind.deg)}`;
+
+  let currWindSpeed = document.getElementById("currentwind-speed");
+  currWindSpeed.innerHTML = `${Math.round(response.data.wind.speed)} mph`;
+
+  showWeatherIcon(response);
+}
+function showWeatherIcon(response) {
+  let currentConditionIcon = document.querySelector("#cond-icon");
+  let weatherCode = response.data.weather[0].id;
+  let iconCode = "";
+  if (weatherCode >= 200 && weatherCode <= 232) {
+    iconCode = "11d";
+  } else if (weatherCode >= 300 && weatherCode <= 321) {
+    iconCode = "09d";
+  } else if (weatherCode >= 500 && weatherCode <= 531) {
+    iconCode = "10d";
+  } else if (weatherCode >= 600 && weatherCode <= 622) {
+    iconCode = "13d";
+  } else if (weatherCode >= 701 && weatherCode <= 781) {
+    iconCode = "50d";
+  } else if (weatherCode === 801) {
+    iconCode = "02d";
+  } else if (weatherCode === 802) {
+    iconCode = "03d";
+  } else if (weatherCode === 803 || weatherCode === 804) {
+    iconCode = "04d";
+  } else if (weatherCode === 800) {
+    iconCode = "01d";
+  }
+  let iconURL = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+  currentConditionIcon.innerHTML = `<img src = "${iconURL}" alt="Weather Icon">`;
+
+getCityWeather("New York");
+let searchForm = document.querySelector("#city-search");
+searchForm.addEventListener("submit", submitHandler);
