@@ -59,7 +59,7 @@ function submitHandler(event) {
   }
 }
 function getCityWeather(cityName) {
-  let city = cityName.replace(", ", ",").trim();
+  let city = cityName.trim();
   let apiKey = "e7404fca7e5b62ae35774a01b0feeac1";
   let units = "imperial";
   let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?";
