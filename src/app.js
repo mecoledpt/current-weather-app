@@ -100,18 +100,23 @@ function showWeather(response) {
 
   let feelsLike = document.getElementById("feels-like-temp");
   feelsLike.innerHTML = `${Math.round(response.data.main.feels_like)}°`;
+  feelsLike.classList.add("bold");
 
   let currCond = document.getElementById("current-cond");
   currCond.innerHTML = `${response.data.weather[0].main}`;
+  currCond.classList.add("bold");
 
   let currHumidity = document.getElementById("current-humidity");
   currHumidity.innerHTML = `${response.data.main.humidity}%`;
+  currHumidity.classList.add("bold");
 
   let currWindDir = document.getElementById("current-wind-dir");
   currWindDir.innerHTML = `${windDirCompass(response.data.wind.deg)}`;
+  currWindDir.classList.add("bold");
 
   let currWindSpeed = document.getElementById("current-wind-speed");
   currWindSpeed.innerHTML = `${Math.round(response.data.wind.speed)} mph`;
+  currWindSpeed.classList.add("bold");
 
   showWeatherIcon(response);
   backgroundChange(response);

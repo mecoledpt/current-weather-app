@@ -37,6 +37,9 @@ footer {
 }
 a {
   color: #a9cde0;
+  font-weight: 500;
+}
+.bold {
   font-weight: 400;
 }
 .container {
@@ -53,6 +56,7 @@ a {
   font-size: 4rem;
   font-weight: 200;
   margin-bottom: 0;
+  line-height: 100px;
 }
 .superscript {
   display: inline;
