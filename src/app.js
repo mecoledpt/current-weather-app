@@ -193,9 +193,7 @@ function backgroundChange(response) {
     response.data.dt < response.data.sys.sunset
   ) {
     body.classList.add("light");
-    body.classList.remove("dark");
   } else {
-    body.classList.add("dark");
     body.classList.remove("light");
   }
 }
