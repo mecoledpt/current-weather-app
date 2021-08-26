@@ -11,7 +11,7 @@
       crossorigin="anonymous"
     />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link href="src/weather-icons.min.css" rel="stylesheet" />
+    <link href="src/weather-icons.css" rel="stylesheet" />
     <link href="src/style.css" rel="stylesheet" />
     <title>Current Weather</title>
   </head>
@@ -56,9 +56,17 @@
       <div class="weather-forecast">
         <div class="row">
           <div class="col-2">
-            Thu
-            <img src="" />
-            thermometer icon 94° 40° umbrella icon 50%
+            <div class="forecast-day">Thu</div>
+            <div class="forecast-icon"><i class="wi wi-day-sunny"></i></div>
+
+            <div class="forecast-temperature">
+              <i class="wi wi-thermometer"></i>
+              <span class="forecast-temperature-high">94°</span> /
+              <span class="forecast-temperature-low">60°</span>
+            </div>
+            <div class="forecast-precipitation">
+              <i class="wi wi-umbrella"></i>50%
+            </div>
           </div>
         </div>
       </div>
