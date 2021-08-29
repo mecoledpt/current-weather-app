@@ -97,12 +97,14 @@ a {
 .inactive:hover {
   cursor: initial;
 }
+.weather-forecast {
+  margin-top: 20px;
+}
 .forecast-card {
   text-align: center;
   margin: 10px auto 20px auto;
   border: 1px dotted #ffffff;
   border-radius: 10px;
-  max-width: 10%;
   padding: 10px 10px 10px 10px;
 }
 .forecast-icon {

@@ -120,6 +120,7 @@ function showWeather(response) {
 
   showWeatherIcon(response);
   backgroundChange(response);
+  displayForecast();
 }
 //determines what weather icon to link to based on API response
 function showWeatherIcon(response) {
@@ -198,11 +199,6 @@ function showWeatherIcon(response) {
   currentConditionIcon.classListReplace("", iconClass);
 }
 
-//Default API call of "New York"
-getCityWeather("New York");
-let searchForm = document.querySelector("#city-search");
-searchForm.addEventListener("submit", submitHandler);
-
 //Converts fahrenheit temperature to celcius, disables converting to C again
 function tempConvertCelcius(event) {
   event.preventDefault();
@@ -219,7 +215,6 @@ function tempConvertCelcius(event) {
   celciusLink.classList.add("inactive");
   celciusLink.removeEventListener("click", tempConvertCelcius);
 }
-
 let celciusLink = document.querySelector("a#celcius-link");
 celciusLink.addEventListener("click", tempConvertCelcius);
 
@@ -252,3 +247,37 @@ function backgroundChange(response) {
     body.classList.remove("light");
   }
 }
+
+function displayForecast() {
+  let forecastElement = document.getElementById("forecast");
+
+  let forecastHTML = "";
+
+  let days = ["Thu", "Fri", "Sat"];
+
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
+    <div class="col-2 forecast-card">
+    <div class="forecast-day bold">${day}</div>
+    <div class="forecast-icon"><i class="bi bi-sun-fill"></i></div>
+
+    <div class="forecast-temperature">
+      <i class="bi bi-thermometer-half"></i>
+      <span class="forecast-temperature-high bold">94°</span> /
+      <span class="forecast-temperature-low">60°</span>
+    </div>
+    <div class="forecast-precipitation">
+      <i class="bi bi-umbrella-fill"></i> 50%
+    </div>
+  </div>`;
+  });
+  forecastElement.innerHTML = forecastHTML;
+  console.log(forecastHTML);
+}
+displayForecast();
+//Default API call of "New York"
+// getCityWeather("New York");
+// let searchForm = document.querySelector("#city-search");
+// searchForm.addEventListener("submit", submitHandler);
