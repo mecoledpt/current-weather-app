@@ -120,7 +120,7 @@ function showWeather(response) {
 
   showWeatherIcon(response);
   backgroundChange(response);
-  displayForecast();
+  getForecast(response.data.coord);
 }
 //determines what weather icon to link to based on API response
 function showWeatherIcon(response) {
@@ -196,7 +196,7 @@ function showWeatherIcon(response) {
   } else if (weatherCode === 800 && time < sunrise && time >= sunset) {
     iconClass = "bi bi-moon-stars-fill";
   }
-  currentConditionIcon.classListReplace("", iconClass);
+  currentConditionIcon.setAttribute("class", `${iconClass}`);
 }
 
 //Converts fahrenheit temperature to celcius, disables converting to C again
@@ -247,7 +247,11 @@ function backgroundChange(response) {
     body.classList.remove("light");
   }
 }
+function getForecast(coordinates) {
+  console.log(coordinates);
+}
 
+//updates HTML to create elements based on an array of days
 function displayForecast() {
   let forecastElement = document.getElementById("forecast");
 
@@ -278,6 +282,6 @@ function displayForecast() {
 }
 displayForecast();
 //Default API call of "New York"
-// getCityWeather("New York");
-// let searchForm = document.querySelector("#city-search");
-// searchForm.addEventListener("submit", submitHandler);
+getCityWeather("New York");
+let searchForm = document.querySelector("#city-search");
+searchForm.addEventListener("submit", submitHandler);
