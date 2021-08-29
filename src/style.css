@@ -27,6 +27,12 @@ body.light {
   background: -moz-linear-gradient(top, #abeaf9, #49579e);
   background: linear-gradient(to bottom, #abeaf9, #49579e);
 }
+body.sun {
+  background: #f5f1d8;
+  background: -webkit-linear-gradient(top, #f5f1d8, #a83e21);
+  background: -moz-linear-gradient(top, #f5f1d8, #a83e21);
+  background: linear-gradient(to bottom, #f5f1d8, #a83e21);
+}
 
 h1 {
   margin: 20px auto 10px auto;
@@ -102,11 +108,8 @@ a {
 }
 .forecast-card {
   text-align: center;
-  margin: 10px auto;
-  max-width: 55%;
-  box-shadow: 3px rgba(53, 15, 124, 0.3);
-  border-radius: 10px;
-  padding: 10px 10px 10px 10px;
+  max-width: 45%;
+  border-radius: 15px;
 }
 .forecast-icon {
   font-size: 1.5em;

@@ -250,12 +250,18 @@ function tempConvertFahrenheit(event) {
 function backgroundChange(time, sunrise, sunset) {
   let body = document.querySelector("body");
 
-  if (time >= sunrise && time < sunset) {
-    body.classList.add("light");
+  if (time >= sunrise + 1000 && time <= sunset - 1000) {
+    body.setAttribute("class", "light");
+  } else if (time >= sunrise - 1000 && time < sunrise + 1000) {
+    body.setAttribute("class", "sun");
+  } else if (time > sunset - 1000 && time <= sunset + 1000) {
+    body.setAttribute("class", "sun");
   } else {
-    body.classList.remove("light");
+    body.removeAttribute("class");
   }
+  console.log(body.classList);
 }
+
 function getForecast(coordinates) {
   let lat = coordinates.lat;
   let long = coordinates.lon;
@@ -277,7 +283,7 @@ function displayForecast(response) {
       forecastHTML =
         forecastHTML +
         `
-    <div class="forecast-card col-sm m-auto g-1 p-4">
+    <div class="forecast-card col-sm g-1 p-3 shadow m-3 mx-auto">
     <div class="forecast-day bold">${formatDay(forecastDay.dt)}</div>
     <div class="forecast-icon"><i class="${weatherIcon(
       forecastDay.weather[0].id,
