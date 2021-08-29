@@ -41,6 +41,14 @@ function formatTime(currentTime) {
     return `Last updated at ${currentTime.getHours()}:${currentMinutes} AM`;
   }
 }
+
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tues", "Weds", "Thu", "Fri", "Sat"];
+  return days[day];
+}
+
 let currentDate = document.getElementById("current-date");
 currentDate.innerHTML = formatDate(new Date());
 console.log(formatDate(new Date()));
@@ -55,8 +63,7 @@ function submitHandler(event) {
   let cityName = cityInput.value.trim();
   getCityWeather(cityName);
 }
-
-//API call
+//API call for current weather
 function getCityWeather(cityName) {
   let city = cityName.trim();
   let apiKey = "e7404fca7e5b62ae35774a01b0feeac1";
@@ -91,6 +98,7 @@ function windDirCompass(degrees) {
 }
 //updates HTML elements to show weather response from API
 function showWeather(response) {
+  console.log(response);
   let cityName = document.querySelector("#city-name");
   cityName.innerHTML = `${response.data.name}`;
 
@@ -117,17 +125,22 @@ function showWeather(response) {
   currWindSpeed.innerHTML = `${Math.round(response.data.wind.speed)} mph`;
   currWindSpeed.classList.add("bold");
 
-  showWeatherIcon(response);
-  backgroundChange(response);
-  getForecast(response.data.coord);
-}
-//determines what weather icon to link to based on API response
-function showWeatherIcon(response) {
   let currentConditionIcon = document.querySelector("#cond-icon");
-  let weatherCode = response.data.weather[0].id;
+  let conditionId = response.data.weather[0].id;
   let time = response.data.dt;
   let sunset = response.data.sys.sunset;
   let sunrise = response.data.sys.sunrise;
+  currentConditionIcon.setAttribute(
+    "class",
+    `${weatherIcon(conditionId, time, sunset, sunrise)}`
+  );
+
+  backgroundChange(time, sunrise, sunset);
+  getForecast(response.data.coord);
+}
+//determines what weather icon to link to based on API response
+function weatherIcon(conditionId, time, sunset, sunrise) {
+  let weatherCode = conditionId;
   let iconClass = "";
   if (weatherCode >= 200 && weatherCode <= 232) {
     iconClass = "bi bi-cloud-lightning-rain-fill";
@@ -195,7 +208,7 @@ function showWeatherIcon(response) {
   } else if (weatherCode === 800 && time < sunrise && time >= sunset) {
     iconClass = "bi bi-moon-stars-fill";
   }
-  currentConditionIcon.setAttribute("class", `${iconClass}`);
+  return iconClass;
 }
 
 //Converts fahrenheit temperature to celcius, disables converting to C again
@@ -234,13 +247,10 @@ function tempConvertFahrenheit(event) {
   celciusLink.addEventListener("click", tempConvertCelcius);
 }
 //displays light theme if after sunrise and before sunset, dark theme if after sunset and before sunrise
-function backgroundChange(response) {
+function backgroundChange(time, sunrise, sunset) {
   let body = document.querySelector("body");
 
-  if (
-    response.data.dt >= response.data.sys.sunrise &&
-    response.data.dt < response.data.sys.sunset
-  ) {
+  if (time >= sunrise && time < sunset) {
     body.classList.add("light");
   } else {
     body.classList.remove("light");
@@ -257,40 +267,41 @@ function getForecast(coordinates) {
 
 //updates HTML to create elements based on an array of days
 function displayForecast(response) {
+  let forecast = response.data.daily;
+  console.log(forecast);
   let forecastElement = document.getElementById("forecast");
-
   let forecastHTML = "";
 
-  let days = ["Sun", "Mon", "Tues", "Weds", "Thu", "Fri", "Sat"];
-  let responseDaily = response.data.daily;
-  let dt = responseDaily[0].dt;
-  let day = dt.getDay();
-  console.log(day);
+  forecast.forEach(function (forecastDay, i) {
+    if (i < 5) {
+      forecastHTML =
+        forecastHTML +
+        `
+    <div class="col-2 forecast-card">
+    <div class="forecast-day bold">${formatDay(forecastDay.dt)}</div>
+    <div class="forecast-icon"><i class="${weatherIcon(
+      forecastDay.weather[0].id,
+      forecastDay.dt,
+      forecastDay.sunset,
+      forecastDay.sunrise
+    )}"></i></div>
 
-  // for (let i = 0; i < 6; i++) {
-  //   let weekday = days[responseDaily[i].dt.getDay()];
-  //   console.log(weekday);
-  // }
-
-  // days.forEach(function (day) {
-  //   forecastHTML =
-  //     forecastHTML +
-  //     `
-  //   <div class="col-2 forecast-card">
-  //   <div class="forecast-day bold">${day}</div>
-  //   <div class="forecast-icon"><i class="bi bi-sun-fill"></i></div>
-
-  //   <div class="forecast-temperature">
-  //     <i class="bi bi-thermometer-half"></i>
-  //     <span class="forecast-temperature-high bold">94°</span> /
-  //     <span class="forecast-temperature-low">60°</span>
-  //   </div>
-  //   <div class="forecast-precipitation">
-  //     <i class="bi bi-umbrella-fill"></i> 50%
-  //   </div>
-  // </div>`;
-  // });
-  // forecastElement.innerHTML = forecastHTML;
+    <div class="forecast-temperature">
+      <i class="bi bi-thermometer-half"></i>
+      <span class="forecast-temperature-high bold">${Math.round(
+        forecastDay.temp.max
+      )}</span> /
+      <span class="forecast-temperature-low">${Math.round(
+        forecastDay.temp.min
+      )}</span>
+    </div>
+    <div class="forecast-precipitation">
+      <i class="bi bi-umbrella-fill"></i> ${forecastDay.pop * 100}%
+    </div>
+  </div>`;
+    }
+  });
+  forecastElement.innerHTML = forecastHTML;
 }
 
 //Default API call of "New York"
