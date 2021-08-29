@@ -273,11 +273,11 @@ function displayForecast(response) {
   let forecastHTML = "";
 
   forecast.forEach(function (forecastDay, i) {
-    if (i < 5) {
+    if (i < 6) {
       forecastHTML =
         forecastHTML +
         `
-    <div class="col-2 forecast-card">
+    <div class="forecast-card col-sm m-auto g-1 p-4">
     <div class="forecast-day bold">${formatDay(forecastDay.dt)}</div>
     <div class="forecast-icon"><i class="${weatherIcon(
       forecastDay.weather[0].id,
@@ -290,10 +290,10 @@ function displayForecast(response) {
       <i class="bi bi-thermometer-half"></i>
       <span class="forecast-temperature-high bold">${Math.round(
         forecastDay.temp.max
-      )}</span> /
+      )}°</span> /
       <span class="forecast-temperature-low">${Math.round(
         forecastDay.temp.min
-      )}</span>
+      )}°</span>
     </div>
     <div class="forecast-precipitation">
       <i class="bi bi-umbrella-fill"></i> ${forecastDay.pop * 100}%

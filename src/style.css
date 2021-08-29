@@ -102,8 +102,9 @@ a {
 }
 .forecast-card {
   text-align: center;
-  margin: 10px 10px 20px 10px;
-  border: 1px dotted #ffffff;
+  margin: 10px auto;
+  max-width: 55%;
+  box-shadow: 3px rgba(53, 15, 124, 0.3);
   border-radius: 10px;
   padding: 10px 10px 10px 10px;
 }
