@@ -16,16 +16,22 @@
   </head>
   <body>
     <div class="container">
-      <form id="city-search">
-        <input
-          type="text"
-          autocomplete="off"
-          placeholder="New York"
-          class="form-control-sm input-text"
-          id="city-name-input"
-        />
-        <input type="submit" class="btn-light button" />
-      </form>
+      <header>
+        <form id="city-search">
+          <input
+            type="text"
+            autocomplete="off"
+            placeholder="New York"
+            class="input-text"
+            id="city-name-input"
+          />
+          <input type="submit" class="button" />
+        </form>
+
+        <button class="locate-btn">
+          <i class="bi bi-pin-map" id="locate-btn"></i> Locate
+        </button>
+      </header>
       <h1 id="city-name">New York</h1>
       <p class="date-time">
         <span id="current-date">Sunday, 22 August 2021</span><br />
