@@ -91,7 +91,6 @@ function windDirCompass(degrees) {
 }
 //updates HTML elements to show weather response from API
 function showWeather(response) {
-  console.log(response);
   let cityName = document.querySelector("#city-name");
   cityName.innerHTML = `${response.data.name}`;
 
@@ -248,39 +247,52 @@ function backgroundChange(response) {
   }
 }
 function getForecast(coordinates) {
-  console.log(coordinates);
+  let lat = coordinates.lat;
+  let long = coordinates.lon;
+  let apiKey = "e7404fca7e5b62ae35774a01b0feeac1";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&appid=${apiKey}&units=imperial`;
+
+  axios.get(apiUrl).then(displayForecast);
 }
 
 //updates HTML to create elements based on an array of days
-function displayForecast() {
+function displayForecast(response) {
   let forecastElement = document.getElementById("forecast");
 
   let forecastHTML = "";
 
-  let days = ["Thu", "Fri", "Sat"];
+  let days = ["Sun", "Mon", "Tues", "Weds", "Thu", "Fri", "Sat"];
+  let responseDaily = response.data.daily;
+  let dt = responseDaily[0].dt;
+  let day = dt.getDay();
+  console.log(day);
 
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `
-    <div class="col-2 forecast-card">
-    <div class="forecast-day bold">${day}</div>
-    <div class="forecast-icon"><i class="bi bi-sun-fill"></i></div>
+  // for (let i = 0; i < 6; i++) {
+  //   let weekday = days[responseDaily[i].dt.getDay()];
+  //   console.log(weekday);
+  // }
 
-    <div class="forecast-temperature">
-      <i class="bi bi-thermometer-half"></i>
-      <span class="forecast-temperature-high bold">94°</span> /
-      <span class="forecast-temperature-low">60°</span>
-    </div>
-    <div class="forecast-precipitation">
-      <i class="bi bi-umbrella-fill"></i> 50%
-    </div>
-  </div>`;
-  });
-  forecastElement.innerHTML = forecastHTML;
-  console.log(forecastHTML);
+  // days.forEach(function (day) {
+  //   forecastHTML =
+  //     forecastHTML +
+  //     `
+  //   <div class="col-2 forecast-card">
+  //   <div class="forecast-day bold">${day}</div>
+  //   <div class="forecast-icon"><i class="bi bi-sun-fill"></i></div>
+
+  //   <div class="forecast-temperature">
+  //     <i class="bi bi-thermometer-half"></i>
+  //     <span class="forecast-temperature-high bold">94°</span> /
+  //     <span class="forecast-temperature-low">60°</span>
+  //   </div>
+  //   <div class="forecast-precipitation">
+  //     <i class="bi bi-umbrella-fill"></i> 50%
+  //   </div>
+  // </div>`;
+  // });
+  // forecastElement.innerHTML = forecastHTML;
 }
-displayForecast();
+
 //Default API call of "New York"
 getCityWeather("New York");
 let searchForm = document.querySelector("#city-search");
