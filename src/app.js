@@ -211,41 +211,6 @@ function weatherIcon(conditionId, time, sunset, sunrise) {
   return iconClass;
 }
 
-//Converts fahrenheit temperature to celcius, disables converting to C again
-function tempConvertCelcius(event) {
-  event.preventDefault();
-  let currTemp = document.getElementById("current-temp");
-  let currTempNum = parseInt(currTemp.textContent, 10);
-  let tempCelcius = Math.round((currTempNum - 32) * (5 / 9));
-  currTemp.innerHTML = `${tempCelcius}°`;
-
-  let fahrenheitLink = document.querySelector("a#fahrenheit-link");
-  fahrenheitLink.classList.remove("inactive");
-  fahrenheitLink.addEventListener("click", tempConvertFahrenheit);
-
-  let celciusLink = document.querySelector("a#celcius-link");
-  celciusLink.classList.add("inactive");
-  celciusLink.removeEventListener("click", tempConvertCelcius);
-}
-let celciusLink = document.querySelector("a#celcius-link");
-celciusLink.addEventListener("click", tempConvertCelcius);
-
-//converts celcius temperature back to fahrenheit, disables converting to F again
-function tempConvertFahrenheit(event) {
-  event.preventDefault();
-  let currTemp = document.getElementById("current-temp");
-  let currTempNum = parseInt(currTemp.textContent, 10);
-  let tempFahrenheit = Math.round((currTempNum * 9) / 5 + 32);
-  currTemp.innerHTML = `${tempFahrenheit}°`;
-
-  let fahrenheitLink = document.querySelector("#fahrenheit-link");
-  fahrenheitLink.classList.remove("inactive");
-  fahrenheitLink.removeEventListener("click", tempConvertFahrenheit);
-
-  let celciusLink = document.querySelector("#celcius-link");
-  celciusLink.classList.add("inactive");
-  celciusLink.addEventListener("click", tempConvertCelcius);
-}
 //displays light theme if after sunrise and before sunset, dark theme if after sunset and before sunrise
 function backgroundChange(time, sunrise, sunset) {
   let body = document.querySelector("body");
