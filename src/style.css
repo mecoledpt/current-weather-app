@@ -21,6 +21,13 @@ body {
   background: linear-gradient(to top, #49579e 0%, #15076b 42%, #17024a 76%);
   font-weight: 200;
 }
+body.light {
+  background: #abeaf9;
+  background: -webkit-linear-gradient(top, #abeaf9, #49579e);
+  background: -moz-linear-gradient(top, #abeaf9, #49579e);
+  background: linear-gradient(to bottom, #abeaf9, #49579e);
+}
+
 h1 {
   margin: 20px auto 10px auto;
   text-shadow: rgba(230, 230, 230, 0.4);
@@ -90,9 +97,14 @@ a {
 .inactive:hover {
   cursor: initial;
 }
-body.light {
-  background: #abeaf9;
-  background: -webkit-linear-gradient(top, #abeaf9, #49579e);
-  background: -moz-linear-gradient(top, #abeaf9, #49579e);
-  background: linear-gradient(to bottom, #abeaf9, #49579e);
+.forecast-card {
+  text-align: center;
+  margin: 10px auto 20px auto;
+  border: 1px dotted #ffffff;
+  border-radius: 10px;
+  max-width: 10%;
+  padding: 10px 10px 10px 10px;
+}
+.forecast-icon {
+  font-size: 1.5em;
 }
