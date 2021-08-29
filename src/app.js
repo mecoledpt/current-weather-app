@@ -125,29 +125,79 @@ function showWeather(response) {
 function showWeatherIcon(response) {
   let currentConditionIcon = document.querySelector("#cond-icon");
   let weatherCode = response.data.weather[0].id;
-  let iconCode = "";
+  let time = response.data.dt;
+  let sunset = response.data.sys.sunset;
+  let sunrise = response.data.sys.sunrise;
+  let iconClass = "";
   if (weatherCode >= 200 && weatherCode <= 232) {
-    iconCode = "11d";
+    iconClass = "bi bi-cloud-lightning-rain-fill";
   } else if (weatherCode >= 300 && weatherCode <= 321) {
-    iconCode = "09d";
-  } else if (weatherCode >= 500 && weatherCode <= 531) {
-    iconCode = "10d";
-  } else if (weatherCode >= 600 && weatherCode <= 622) {
-    iconCode = "13d";
-  } else if (weatherCode >= 701 && weatherCode <= 781) {
-    iconCode = "50d";
-  } else if (weatherCode === 801) {
-    iconCode = "02d";
+    iconClass = "bi bi-cloud-drizzle-fill";
+  } else if (
+    weatherCode === 500 ||
+    weatherCode === 501 ||
+    weatherCode === 520 ||
+    weatherCode === 521 ||
+    weatherCode === 531
+  ) {
+    iconClass = "bi bi-cloud-rain-fill";
+  } else if (
+    weatherCode === 502 ||
+    weatherCode === 503 ||
+    weatherCode === 504 ||
+    weatherCode === 522
+  ) {
+    iconClass = "bi bi-cloud-rain-heavy-fill";
+  } else if (
+    weatherCode === 511 ||
+    weatherCode === 611 ||
+    weatherCode === 612 ||
+    weatherCode === 613 ||
+    weatherCode === 615 ||
+    weatherCode === 616
+  ) {
+    iconClass = "bi bi-cloud-sleet-fill";
+  } else if (
+    weatherCode === 600 ||
+    weatherCode === 601 ||
+    weatherCode === 602 ||
+    weatherCode === 620 ||
+    weatherCode === 621 ||
+    weatherCode === 622
+  ) {
+    iconClass = "bi bi-cloud-snow-fill";
+  } else if (weatherCode === 701 || weatherCode === 741) {
+    iconClass = "bi bi-cloud-fog-fill";
+  } else if (
+    weatherCode === 711 ||
+    weatherCode === 731 ||
+    weatherCode === 751 ||
+    weatherCode === 761 ||
+    weatherCode === 762
+  ) {
+    iconClass = "bi bi-cloud-haze-fill";
+  } else if (weatherCode === 721) {
+    iconClass = "bi bi-cloud-haze-1-fill";
+  } else if (weatherCode === 771) {
+    iconClass = "bi bi-cloud-fog-2-fill";
+  } else if (weatherCode === 781) {
+    iconClass = "bi bi-tornado";
+  } else if (weatherCode === 801 && time >= sunrise && time <= sunset) {
+    iconClass = "bi bi-cloud-sun-fill";
+  } else if (weatherCode === 801 && time < sunrise && time >= sunset) {
+    iconClass = "bi bi-cloud-fill";
   } else if (weatherCode === 802) {
-    iconCode = "03d";
+    iconClass = "bi bi-cloud-fill";
   } else if (weatherCode === 803 || weatherCode === 804) {
-    iconCode = "04d";
-  } else if (weatherCode === 800) {
-    iconCode = "01d";
+    iconClass = "bi bi-clouds-fill";
+  } else if (weatherCode === 800 && time >= sunrise && time <= sunset) {
+    iconClass = "bi bi-sun-fill";
+  } else if (weatherCode === 800 && time < sunrise && time >= sunset) {
+    iconClass = "bi bi-moon-stars-fill";
   }
-  let iconURL = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
-  currentConditionIcon.innerHTML = `<img src = "${iconURL}" alt="Weather Icon">`;
+  currentConditionIcon.classListReplace("", iconClass);
 }
+
 //Default API call of "New York"
 getCityWeather("New York");
 let searchForm = document.querySelector("#city-search");

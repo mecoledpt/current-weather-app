@@ -11,7 +11,6 @@
       crossorigin="anonymous"
     />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link href="src/weather-icons.css" rel="stylesheet" />
     <link href="src/style.css" rel="stylesheet" />
     <title>Current Weather</title>
   </head>
@@ -33,8 +32,10 @@
         <span id="curr-time">Last updated 7:43 pm</span>
       </p>
       <p>
-        <span id="cond-icon">☀️</span>
-        <span class="temperature large" id="current-temp">75</span>
+        <span class="cond-icon"
+          ><i id="cond-icon" class="bi bi-sun-fill"></i
+        ></span>
+        <span class="temperature large" id="current-temp">75°</span>
         <span class="superscript"
           ><a href="#" id="fahrenheit-link" class="inactive">F</a> |
           <a href="#" id="celcius-link">C</a></span
@@ -57,15 +58,15 @@
         <div class="row">
           <div class="col-2">
             <div class="forecast-day">Thu</div>
-            <div class="forecast-icon"><i class="wi wi-day-sunny"></i></div>
+            <div class="forecast-icon"><i class="bi bi-sun-fill"></i></div>
 
             <div class="forecast-temperature">
-              <i class="wi wi-thermometer"></i>
+              <i class="bi bi-thermometer-half"></i>
               <span class="forecast-temperature-high">94°</span> /
               <span class="forecast-temperature-low">60°</span>
             </div>
             <div class="forecast-precipitation">
-              <i class="wi wi-umbrella"></i>50%
+              <i class="bi bi-umbrella-fill"></i> 50%
             </div>
           </div>
         </div>
