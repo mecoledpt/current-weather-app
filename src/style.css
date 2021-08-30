@@ -57,13 +57,20 @@ a {
 
 header {
   display: inline-flex;
-  align-items: stretch;
+  align-items: flex-start;
   align-content: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   height: 40px;
-  min-width: 60%;
+  min-width: 50%;
   max-width: 85%;
+}
+@media (max-width: 540px) {
+  header {
+    display: inline;
+    align-items: center;
+    align-content: center;
+  }
 }
 
 .button {
@@ -149,6 +156,7 @@ header {
   margin-top: 20px;
 }
 .forecast-card {
+  font-size: 1.1rem;
   text-align: center;
   max-width: 45%;
   border-radius: 15px;

@@ -297,11 +297,12 @@ function error(err) {
 
 //gets current location
 function getLocation(event) {
+  event.preventDefault();
   navigator.geolocation.getCurrentPosition(success, error);
 }
-getLocation();
-// let locateButton = document.getElementById("locate-btn");
-// locateButton.addEventListener("click", getLocation);
+
+let locateButton = document.getElementById("locate-btn");
+locateButton.addEventListener("click", getLocation);
 
 //Default API call of "New York"
 getCityWeather("New York");
