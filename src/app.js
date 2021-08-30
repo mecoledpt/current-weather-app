@@ -100,7 +100,9 @@ function windDirCompass(degrees) {
 function showWeather(response) {
   console.log(response);
   let cityName = document.querySelector("#city-name");
+  let pageTitle = document.querySelector("title");
   cityName.innerHTML = `${response.data.name}`;
+  pageTitle.innerHTML = `Current Weather in ${response.data.name}`;
 
   let currTemp = document.getElementById("current-temp");
   currTemp.innerHTML = `${Math.round(response.data.main.temp)}°`;
