@@ -224,7 +224,6 @@ function backgroundChange(time, sunrise, sunset) {
   } else {
     body.removeAttribute("class");
   }
-  console.log(body.classList);
 }
 
 function getForecast(coordinates) {
@@ -267,13 +266,37 @@ function displayForecast(response) {
       )}°</span>
     </div>
     <div class="forecast-precipitation">
-      <i class="bi bi-umbrella-fill"></i> ${forecastDay.pop * 100}%
+      <i class="bi bi-umbrella-fill"></i> ${Math.round(forecastDay.pop * 100)}%
     </div>
   </div>`;
     }
   });
   forecastElement.innerHTML = forecastHTML;
 }
+
+//translates current position into coordinates
+function showPosition(position) {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  searchLatLong(latitude, longitude);
+}
+
+//submits api call based on latitude and longitude
+function searchLatLong(latitude, longitude) {
+  let apiKey = "e7404fca7e5b62ae35774a01b0feeac1";
+  let units = "imperial";
+  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?";
+  let apiUrlLatLong = `${apiEndpoint}lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`;
+
+  axios.get(apiUrlLatLong).then(showWeather);
+}
+//gets current location
+function getLocation(event) {
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(showPosition);
+}
+let locateButton = document.getElementById("locate-btn");
+locateButton.addEventListener("click", getLocation);
 
 //Default API call of "New York"
 getCityWeather("New York");
