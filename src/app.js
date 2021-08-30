@@ -130,9 +130,10 @@ function showWeather(response) {
   let time = response.data.dt;
   let sunset = response.data.sys.sunset;
   let sunrise = response.data.sys.sunrise;
+  console.log(conditionId, time, sunrise, sunset);
   currentConditionIcon.setAttribute(
     "class",
-    `${weatherIcon(conditionId, time, sunset, sunrise)}`
+    `${weatherIcon(conditionId, time, sunrise, sunset)}`
   );
 
   backgroundChange(time, sunrise, sunset);
@@ -197,15 +198,15 @@ function weatherIcon(conditionId, time, sunset, sunrise) {
     iconClass = "bi bi-tornado";
   } else if (weatherCode === 801 && time >= sunrise && time <= sunset) {
     iconClass = "bi bi-cloud-sun-fill";
-  } else if (weatherCode === 801 && time < sunrise && time >= sunset) {
+  } else if (weatherCode === 801 && time < sunrise && time > sunset) {
     iconClass = "bi bi-cloud-fill";
   } else if (weatherCode === 802) {
     iconClass = "bi bi-cloud-fill";
   } else if (weatherCode === 803 || weatherCode === 804) {
     iconClass = "bi bi-clouds-fill";
-  } else if (weatherCode === 800 && time >= sunrise && time <= sunset) {
+  } else if (weatherCode === 800 && time > sunrise && time <= sunset) {
     iconClass = "bi bi-sun-fill";
-  } else if (weatherCode === 800 && time < sunrise && time >= sunset) {
+  } else if (weatherCode === 800 && time <= sunrise && time > sunset) {
     iconClass = "bi bi-moon-stars-fill";
   }
   return iconClass;
@@ -274,29 +275,27 @@ function displayForecast(response) {
   forecastElement.innerHTML = forecastHTML;
 }
 
-//translates current position into coordinates
-function showPosition(position) {
-  let latitude = position.coords.latitude;
-  let longitude = position.coords.longitude;
-  searchLatLong(latitude, longitude);
-}
-
 //submits api call based on latitude and longitude
-function searchLatLong(latitude, longitude) {
+function success(pos) {
   let apiKey = "e7404fca7e5b62ae35774a01b0feeac1";
   let units = "imperial";
   let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?";
-  let apiUrlLatLong = `${apiEndpoint}lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`;
+  let apiUrlLatLong = `${apiEndpoint}lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&units=${units}&appid=${apiKey}`;
 
   axios.get(apiUrlLatLong).then(showWeather);
 }
+
+function error(err) {
+  console.log("There was an error");
+}
+
 //gets current location
 function getLocation(event) {
-  event.preventDefault();
-  navigator.geolocation.getCurrentPosition(showPosition);
+  navigator.geolocation.getCurrentPosition(success, error);
 }
-let locateButton = document.getElementById("locate-btn");
-locateButton.addEventListener("click", getLocation);
+getLocation();
+// let locateButton = document.getElementById("locate-btn");
+// locateButton.addEventListener("click", getLocation);
 
 //Default API call of "New York"
 getCityWeather("New York");
