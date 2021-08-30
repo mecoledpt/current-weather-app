@@ -133,7 +133,7 @@ function showWeather(response) {
   console.log(conditionId, time, sunrise, sunset);
   currentConditionIcon.setAttribute(
     "class",
-    `${weatherIcon(conditionId, time, sunrise, sunset)}`
+    `${weatherIcon(conditionId, time, sunset, sunrise)}`
   );
 
   backgroundChange(time, sunrise, sunset);
@@ -204,11 +204,17 @@ function weatherIcon(conditionId, time, sunset, sunrise) {
     iconClass = "bi bi-cloud-fill";
   } else if (weatherCode === 803 || weatherCode === 804) {
     iconClass = "bi bi-clouds-fill";
-  } else if (weatherCode === 800 && time > sunrise && time <= sunset) {
-    iconClass = "bi bi-sun-fill";
-  } else if (weatherCode === 800 && time <= sunrise && time > sunset) {
-    iconClass = "bi bi-moon-stars-fill";
+  } else if (weatherCode === 800) {
+    if (time >= sunrise && time <= sunset) {
+      iconClass = "bi bi-sun-fill";
+    } else {
+      iconClass = "bi bi-moon-stars-fill";
+    }
   }
+
+  // } else if (weatherCode === 800 && time > sunset) {
+  //   iconClass = "bi bi-moon-stars-fill";
+  // }
   return iconClass;
 }
 
