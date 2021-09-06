@@ -158,7 +158,7 @@ header {
 .forecast-card {
   font-size: 1.1rem;
   text-align: center;
-  max-width: 45%;
+  max-width: 80%;
   border-radius: 15px;
   transition: all 200ms ease-in-out;
 }
